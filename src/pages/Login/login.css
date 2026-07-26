@@ -1,0 +1,484 @@
+/* ==========================================================================
+   Bloqueo de pantalla completa (sin scroll de página)
+   ========================================================================== */
+html, body, #root {
+  height: 100%;
+}
+
+.login-page {
+  --color-primary: #000000;
+  --color-on-primary: #ffffff;
+  --color-surface: #ffffff;
+  --color-surface-container-low: #f2f4f6;
+  --color-surface-container: #eceef0;
+  --color-outline-variant: #c6c6cd;
+  --color-on-surface: #191c1e;
+  --color-on-surface-variant: #45464d;
+  --color-secondary: #515f74;
+  --color-error: #ba1a1a;
+  --color-error-container: #ffdad6;
+  --color-on-error-container: #93000a;
+
+  --radius-sm: 8px;
+  --radius-md: 12px;
+  --radius-lg: 20px;
+
+  position: relative;
+  width: 100%;
+  height: 100vh;
+  height: 100dvh; /* pantallas móviles con barra de navegación dinámica */
+  overflow: hidden;
+  font-family: 'Inter', system-ui, sans-serif;
+  color: var(--color-on-surface);
+}
+
+/* ==========================================================================
+   Tagline sobre la imagen (panel glass, solo escritorio)
+   ========================================================================== */
+.login-tagline {
+  position: absolute;
+  z-index: 1;
+  left: clamp(24px, 4vw, 64px);
+  bottom: clamp(24px, 4vh, 56px);
+  max-width: 400px;
+  display: none;
+  flex-direction: column;
+  gap: 10px;
+
+
+  -webkit-backdrop-filter: blur(20px);
+  border-radius: var(--radius-lg);
+  padding: clamp(18px, 2.4vh, 26px) clamp(20px, 2.4vw, 28px);
+  box-shadow: 0 16px 40px -12px rgba(0, 0, 0, 0.35);
+}
+
+@media (min-width: 1024px) {
+  .login-tagline {
+    display: flex;
+    animation: fadeInUp 0.9s cubic-bezier(0.16, 1, 0.3, 1) 0.15s backwards;
+  }
+}
+
+.login-tagline__badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  align-self: flex-start;
+  padding: 6px 12px;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.12);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  border: 1px solid rgba(255, 255, 255, 0.22);
+  color: rgba(255, 255, 255, 0.9);
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 11px;
+  letter-spacing: 0.06em;
+}
+
+.login-tagline__title {
+  font-size: 21px;
+  font-weight: 600;
+  letter-spacing: -0.01em;
+  color: #ffffff;
+  margin: 0;
+}
+
+.login-tagline__text {
+  font-size: 14px;
+  line-height: 1.5;
+  color: rgba(255, 255, 255, 0.78);
+  margin: 0;
+}
+
+/* ==========================================================================
+   Contenedor centrador de la card
+   ========================================================================== */
+.login-stage {
+  position: relative;
+  z-index: 1;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: clamp(12px, 4vw, 32px);
+}
+
+@media (min-width: 1024px) {
+  .login-stage {
+    justify-content: flex-end;
+    padding-right: clamp(40px, 6vw, 96px);
+  }
+}
+
+@keyframes fadeInUp {
+  from { opacity: 0; transform: translateY(16px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* ==========================================================================
+   Card (glass real + scroll interno de seguridad)
+   ========================================================================== */
+.login-card {
+  width: min(94vw, 400px);
+  max-height: 100%;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  gap: clamp(20px, 3.2vh, 28px);
+
+  background: rgba(255, 255, 255, 0.72);
+  backdrop-filter: blur(24px) saturate(160%);
+  -webkit-backdrop-filter: blur(24px) saturate(160%);
+  border: 1px solid rgba(255, 255, 255, 0.6);
+  border-radius: var(--radius-lg);
+  padding: clamp(26px, 3.6vh, 36px) clamp(24px, 3.2vw, 36px);
+  box-shadow:
+    0 30px 60px -20px rgba(0, 0, 0, 0.45),
+    inset 0 1px 0 rgba(255, 255, 255, 0.5);
+
+  animation: fadeInUp 0.7s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+/* Ocultar la barra de scroll pero conservar la función (red de seguridad) */
+.login-card::-webkit-scrollbar {
+  width: 4px;
+}
+.login-card::-webkit-scrollbar-thumb {
+  background: var(--color-outline-variant);
+  border-radius: 999px;
+}
+
+/* ==========================================================================
+   Brand dentro de la card
+   ========================================================================== */
+.login-card__brand {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+
+.login-brand__icon {
+  flex-shrink: 0;
+  width: 44px;
+  height: 44px;
+  border-radius: var(--radius-md);
+  background: var(--color-primary);
+  color: var(--color-on-primary);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 8px 18px -6px rgba(0, 0, 0, 0.35);
+}
+
+.login-brand__title {
+  font-size: 17px;
+  font-weight: 600;
+  letter-spacing: -0.01em;
+  margin: 0;
+}
+
+.login-brand__subtitle {
+  font-size: 12px;
+  color: var(--color-on-surface-variant);
+  margin: 2px 0 0;
+}
+
+/* ==========================================================================
+   Formulario
+   ========================================================================== */
+.login-form {
+  display: flex;
+  flex-direction: column;
+  gap: clamp(18px, 2.6vh, 24px);
+}
+
+.login-field {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.login-label {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: var(--color-on-surface-variant);
+}
+
+.login-label-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.login-link {
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--color-secondary);
+  text-decoration: none;
+  transition: color 0.15s ease;
+}
+
+.login-link:hover {
+  color: var(--color-primary);
+}
+
+.login-input-wrap {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+.login-input-wrap input {
+  width: 100%;
+  height: clamp(42px, 6vh, 48px);
+  background: var(--color-surface);
+  border: 1px solid var(--color-outline-variant);
+  border-radius: var(--radius-sm);
+  padding: 0 14px;
+  font-size: 14px;
+  font-family: inherit;
+  color: var(--color-on-surface);
+  outline: none;
+  transition: border-color 0.15s ease, box-shadow 0.15s ease;
+}
+
+.login-input-wrap input::placeholder {
+  color: #9a9ba1;
+}
+
+.login-input-wrap input:focus {
+  border-color: var(--color-primary);
+  box-shadow: 0 0 0 3px rgba(0, 0, 0, 0.08);
+}
+
+.login-input-wrap input:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.login-toggle-visibility {
+  position: absolute;
+  right: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: none;
+  border: none;
+  padding: 4px;
+  color: var(--color-on-surface-variant);
+  cursor: pointer;
+  transition: color 0.15s ease;
+}
+
+.login-toggle-visibility:hover {
+  color: var(--color-on-surface);
+}
+
+/* ==========================================================================
+   Error
+   ========================================================================== */
+.login-error {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 12.5px;
+  color: var(--color-on-error-container);
+  background: var(--color-error-container);
+  border-radius: var(--radius-sm);
+  padding: 9px 12px;
+}
+
+.login-error--shake {
+  animation: shake 0.4s ease;
+}
+
+@keyframes shake {
+  0%, 100% { transform: translateX(0); }
+  20% { transform: translateX(-6px); }
+  40% { transform: translateX(6px); }
+  60% { transform: translateX(-4px); }
+  80% { transform: translateX(4px); }
+}
+
+/* ==========================================================================
+   Checkbox
+   ========================================================================== */
+.login-options {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding-top: 2px;
+}
+
+.login-checkbox {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 13px;
+  color: var(--color-on-surface-variant);
+  cursor: pointer;
+  user-select: none;
+}
+
+.login-checkbox input {
+  position: absolute;
+  opacity: 0;
+  width: 0;
+  height: 0;
+}
+
+.login-checkbox__box {
+  width: 17px;
+  height: 17px;
+  border-radius: 5px;
+  border: 1px solid var(--color-outline-variant);
+  background: var(--color-surface);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--color-on-primary);
+  transition: background 0.15s ease, border-color 0.15s ease;
+}
+
+.login-checkbox__box svg {
+  opacity: 0;
+  transform: scale(0.5);
+  transition: opacity 0.12s ease, transform 0.12s ease;
+}
+
+.login-checkbox input:checked + .login-checkbox__box {
+  background: var(--color-primary);
+  border-color: var(--color-primary);
+}
+
+.login-checkbox input:checked + .login-checkbox__box svg {
+  opacity: 1;
+  transform: scale(1);
+}
+
+/* ==========================================================================
+   Botón submit
+   ========================================================================== */
+.login-submit {
+  height: clamp(42px, 6vh, 48px);
+  border: none;
+  border-radius: var(--radius-sm);
+  background: var(--color-primary);
+  color: var(--color-on-primary);
+  font-size: 13px;
+  font-weight: 600;
+  letter-spacing: 0.03em;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  cursor: pointer;
+  box-shadow: 0 10px 20px -8px rgba(0, 0, 0, 0.35);
+  transition: transform 0.12s ease, opacity 0.15s ease;
+}
+
+.login-submit:hover:not(:disabled) {
+  opacity: 0.92;
+}
+
+.login-submit:active:not(:disabled) {
+  transform: scale(0.98);
+}
+
+.login-submit:disabled {
+  cursor: not-allowed;
+  opacity: 0.75;
+}
+
+.login-spin {
+  animation: spin 0.9s linear infinite;
+}
+
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+
+/* ==========================================================================
+   SSO
+   ========================================================================== */
+.login-sso {
+  padding-top: clamp(16px, 2.4vh, 22px);
+  border-top: 1px solid var(--color-outline-variant);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+}
+
+.login-sso__badge {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 5px 12px;
+  border-radius: 999px;
+  background: var(--color-surface-container-low);
+  border: 1px solid rgba(198, 198, 205, 0.5);
+  font-size: 10.5px;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--color-on-surface-variant);
+}
+
+.login-sso__button {
+  width: 100%;
+  height: 42px;
+  border-radius: var(--radius-sm);
+  border: 1px solid var(--color-outline-variant);
+  background: var(--color-surface-container);
+  color: var(--color-on-surface);
+  font-size: 13.5px;
+  font-weight: 500;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  cursor: pointer;
+  transition: background 0.15s ease;
+}
+
+.login-sso__button:hover {
+  background: var(--color-surface-container-low);
+}
+
+/* ==========================================================================
+   Footer dentro de la card
+   ========================================================================== */
+.login-card__footer {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  margin: 0;
+  font-size: 10.5px;
+  color: var(--color-on-surface-variant);
+  text-align: center;
+}
+
+/* ==========================================================================
+   Compactar aún más en pantallas muy bajas (celular en horizontal, etc.)
+   ========================================================================== */
+@media (max-height: 620px) {
+  .login-card {
+    gap: 12px;
+    padding: 18px 22px;
+  }
+  .login-form {
+    gap: 12px;
+  }
+  .login-brand__subtitle,
+  .login-card__footer {
+    display: none;
+  }
+}

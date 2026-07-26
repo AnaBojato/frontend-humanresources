@@ -1,0 +1,74 @@
+.carrusel {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  overflow: hidden;
+  background: #0b0d10;
+}
+
+.carrusel__slide {
+  position: absolute;
+  inset: 0;
+  background-size: cover;
+  background-position: center;
+  opacity: 0;
+  transform: scale(1);
+  transition: opacity 1.4s ease;
+  animation: carrusel-zoom 15s ease-in-out infinite alternate;
+}
+
+.carrusel__slide.is-active {
+  opacity: 1;
+  z-index: 1;
+}
+
+@keyframes carrusel-zoom {
+  from { transform: scale(1); }
+  to { transform: scale(1.08); }
+}
+
+.carrusel__overlay {
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+  background: linear-gradient(
+    180deg,
+    rgba(8, 10, 14, 0.6) 0%,
+    rgba(8, 10, 14, 0.25) 35%,
+    rgba(8, 10, 14, 0.35) 65%,
+    rgba(8, 10, 14, 0.75) 100%
+  );
+}
+
+.carrusel__dots {
+  position: absolute;
+  z-index: 3;
+  left: 50%;
+  bottom: clamp(14px, 3vh, 26px);
+  transform: translateX(-50%);
+  display: flex;
+  gap: 8px;
+}
+
+.carrusel__dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 999px;
+  border: none;
+  padding: 0;
+  background: rgba(255, 255, 255, 0.4);
+  cursor: pointer;
+  transition: background 0.2s ease, width 0.2s ease;
+}
+
+.carrusel__dot.is-active {
+  background: #ffffff;
+  width: 22px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .carrusel__slide {
+    animation: none;
+    transition: opacity 0.3s linear;
+  }
+}
