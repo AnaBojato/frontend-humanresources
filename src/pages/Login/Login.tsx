@@ -103,7 +103,7 @@ export default function Login() {
                   id="login-id"
                   name="login-id"
                   type="text"
-                  placeholder="adventure-works\ken0"
+                  placeholder="Ingresa tu Usuario"
                   autoComplete="username"
                   value={loginId}
                   onChange={(e) => setLoginId(e.target.value)}
