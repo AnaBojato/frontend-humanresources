@@ -1,151 +1,170 @@
-/* ==========================================================================
-   Sidebar - Barra lateral (AdventureWorks / Sistema de Gestión de RRHH)
-   ========================================================================== */
+:root {
+  --sidebar-width: 280px;
+}
+
+* {
+  box-sizing: border-box;
+}
 
 .sidenav {
-  box-sizing: border-box;
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-  align-items: flex-start;
-  padding: 24px 16px;
-
   position: fixed;
-  top: 0;
   left: 0;
-  width: 280px;
-  min-height: 100vh;
-
-  background: #f7f9fb;
+  top: 0;
+  height: 100vh;
+  width: var(--sidebar-width, 280px);
+  background: #ffffff;
   border-right: 1px solid #c6c6cd;
-  z-index: 2;
-  font-family: "Inter", sans-serif;
+  z-index: 30;
+  transition: width 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+  font-family: "Inter", system-ui, sans-serif;
+  /* Sin overflow:hidden aquí a propósito: el botón toggle vive
+     parcialmente fuera del borde derecho y necesita poder verse. */
 }
 
+/* Contenedor interno: aquí sí se recorta y hace scroll el contenido,
+   dejando al botón toggle fuera de ese recorte. */
+.sidenav-inner {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+/* ==========================================================================
+   Botón toggle (colapsar / expandir)
+   ========================================================================== */
+.sidenav-toggle {
+  position: absolute;
+  top: 28px;
+  right: -16px;
+  z-index: 50;
+
+  width: 32px;
+  height: 32px;
+  border-radius: 999px;
+  border: 3px solid #ffffff;
+  background: #000000;
+  color: #ffffff;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  box-shadow: 0 6px 16px -2px rgba(0, 0, 0, 0.45);
+  transition: transform 0.15s ease, background 0.15s ease, box-shadow 0.15s ease;
+}
+
+.sidenav-toggle:hover {
+  background: #191c1e;
+  transform: scale(1.08);
+  box-shadow: 0 8px 20px -2px rgba(0, 0, 0, 0.5);
+}
+
+.sidenav-toggle:active {
+  transform: scale(0.96);
+}
+
+.toggle-icon {
+  width: 15px;
+  height: 15px;
+  transition: transform 0.25s ease;
+}
+
+/* ==========================================================================
+   Header / marca
+   ========================================================================== */
 .sidenav-margin {
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-  padding: 0 0 48px;
-  width: 100%;
+  padding: 28px 24px 16px;
+  transition: padding 0.25s ease;
 }
 
-.sidenav-container {
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-  padding: 0 16px;
-  width: 100%;
+.sidenav--colapsado .sidenav-margin {
+  padding: 28px 10px 16px;
+  text-align: center;
 }
 
 .brand {
-  width: 100%;
+  font-size: 18px;
   font-weight: 700;
-  font-size: 24px;
-  line-height: 32px;
-  letter-spacing: -0.24px;
-  color: #000000;
+  letter-spacing: -0.01em;
+  color: #191c1e;
   margin: 0;
+  white-space: nowrap;
+  overflow: hidden;
 }
 
-.sidenav-subtitle-container {
-  width: 100%;
-  margin-top: 4px;
+.sidenav--colapsado .brand {
+  font-size: 15px;
+  font-weight: 800;
 }
 
 .subtitle {
-  width: 100%;
-  font-weight: 400;
-  font-size: 14px;
-  line-height: 20px;
+  font-size: 11px;
   color: #45464d;
-  margin: 0;
+  margin: 4px 0 0;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
+/* ==========================================================================
+   Navegación
+   ========================================================================== */
 .nav {
+  flex: 1;
   display: flex;
   flex-direction: column;
-  align-items: flex-start;
-  gap: 8px;
-  width: 100%;
-  flex: 1;
+  gap: 4px;
+  padding: 8px 14px;
+  overflow-y: auto;
+  overflow-x: hidden;
 }
 
 .nav-link {
   display: flex;
-  flex-direction: row;
   align-items: center;
-
-  padding: 10px 16px;
-  gap: 16px;
-
-  width: 100%;
-  min-height: 42px;
-
-  border-radius: 9px;
-
-  font-weight: 400;
-  font-size: 14px;
-  line-height: 20px;
-
+  gap: 12px;
+  padding: 10px 12px;
+  border-radius: 10px;
   color: #45464d;
   text-decoration: none;
-
-  transition:
-    background-color 0.15s ease,
-    color 0.15s ease,
-    transform 0.15s ease;
+  font-size: 14px;
+  font-weight: 500;
+  white-space: nowrap;
+  transition: background 0.15s ease, color 0.15s ease, justify-content 0.15s ease;
 }
 
 .nav-link:hover {
-  background: #eceef0;
+  background: #f2f4f6;
+  color: #191c1e;
 }
 
 .nav-link--active {
-  background: #d5e3fd;
-  color: #131b2e;
-  font-weight: 600;
-  box-shadow: inset 3px 0 0 #57657b;
+  background: #000000;
+  color: #ffffff;
 }
 
 .nav-icon {
-  width: 8px;
-  height: 8px;
-  background: #8d96a6;
-  border-radius: 50%;
-  flex: none;
-
-  margin-left: 5px;
-
-  transition: 0.2s ease;
-}
-
-.nav-link:hover .nav-icon {
-  background: #57657b;
-  transform: scale(1.15);
-}
-
-.nav-link--active .nav-icon {
-  width: 8px;
-  height: 8px;
-  background: #131b2e;
-}
-
-.nav-link--active .nav-icon {
-  background: #57657b;
+  flex-shrink: 0;
+  width: 19px;
+  height: 19px;
 }
 
 .nav-text {
-  flex: none;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
-.icon {
-  display: inline-block;
-  flex: none;
+.sidenav--colapsado .nav-link {
+  justify-content: center;
+  padding: 12px 0;
 }
 
-@media (max-width: 900px) {
+/* ==========================================================================
+   Responsive (mobile)
+   ========================================================================== */
+@media (max-width: 1024px) {
   .sidenav {
-    display: none;
+    box-shadow: 6px 0 20px -8px rgba(0, 0, 0, 0.15);
   }
 }

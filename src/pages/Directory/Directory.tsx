@@ -384,7 +384,7 @@ const Directory: React.FC = () => {
 
   return (
     <div className="directory-layout">
-      <Sidebar activeItem="Directory" />
+      <Sidebar activeItem="Directorio" />
 
       <div className="directory-content">
         {/* TOP NAV */}
@@ -858,12 +858,6 @@ const Directory: React.FC = () => {
                       </p>
                     </div>
                   </div>
-
-                  <p className="directory-note">
-                    El historial completo de reasignaciones anteriores requiere un endpoint adicional en
-                    el backend (por ejemplo <code>GET /api/empleados/:id/historial-departamentos</code>),
-                    ya que los controllers actuales solo exponen la asignación vigente por empleado.
-                  </p>
                 </div>
               )}
 
