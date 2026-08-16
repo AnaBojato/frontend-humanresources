@@ -189,17 +189,6 @@ export default function Login() {
             </button>
           </form>
 
-          <div className="login-sso">
-            <div className="login-sso__badge">
-              <Fingerprint size={13} />
-              SSO habilitado
-            </div>
-            <button type="button" className="login-sso__button">
-              <Building2 size={16} />
-              Ingreso empresarial
-            </button>
-          </div>
-
           <p className="login-card__footer">
             <ShieldCheck size={13} />
             Seguridad certificada · © 2026 AdventureWorks Inc.

@@ -1,4 +1,5 @@
 import React from "react";
+import { Link } from "react-router-dom";
 import "./sidebar.css";
 
 interface NavItem {
@@ -8,7 +9,7 @@ interface NavItem {
 
 const navItems: NavItem[] = [
   { label: "Dashboard", href: "/dashboard" },
-  { label: "Empleados", href: "/empleados" },
+  { label: "Directorio", href: "/directorio" },
   { label: "Turnos", href: "/turnos" },
   { label: "Candidatos", href: "/candidatos" },
 ];
@@ -37,16 +38,16 @@ const Sidebar: React.FC<SidebarProps> = ({ activeItem = "Dashboard" }) => {
 
       <nav className="nav">
         {navItems.map((item) => (
-          <a
+          <Link
             key={item.label}
-            href={item.href}
+            to={item.href}
             className={`nav-link ${
               item.label === activeItem ? "nav-link--active" : ""
             }`}
           >
             <IconPlaceholder className="nav-icon" />
             <span className="nav-text">{item.label}</span>
-          </a>
+          </Link>
         ))}
       </nav>
     </aside>
