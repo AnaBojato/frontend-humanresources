@@ -1,6 +1,7 @@
 import { Routes, Route, Navigate } from 'react-router-dom';
 import Login from './pages/Login/Login';
 import Dashboard from './pages/Dashboard/Dashboard';
+import Directory from './pages/Directory/Directory';
 import RutaProtegida from './components/RutaProtegida/RutaProtegida';
 
 function App() {
@@ -10,6 +11,12 @@ function App() {
       <Route path="/dashboard" element={
           <RutaProtegida>
             <Dashboard />
+          </RutaProtegida>
+        }
+      />
+      <Route path="/directorio" element={
+          <RutaProtegida>
+            <Directory />
           </RutaProtegida>
         }
       />

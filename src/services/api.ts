@@ -20,12 +20,13 @@ interface RespuestaBackend<T> {
   exito: boolean;
   mensaje?: string;
   datos?: T;
+  [clave: string]: unknown; // permite campos extra como "paginacion"
 }
 
-export async function apiFetch<T>(
+async function ejecutarFetch<T>(
   endpoint: string,
-  options: RequestInit = {}
-): Promise<T> {
+  options: RequestInit
+): Promise<RespuestaBackend<T>> {
   const token = localStorage.getItem(TOKEN_KEY);
 
   const headers: HeadersInit = {
@@ -54,11 +55,28 @@ export async function apiFetch<T>(
 
   if (!response.ok || data?.exito === false) {
     const mensaje =
-      data?.mensaje ||
-      "Ocurrió un error inesperado. Intenta nuevamente.";
+      data?.mensaje || "Ocurrió un error inesperado. Intenta nuevamente.";
 
     throw new ApiError(mensaje, response.status);
   }
 
-  return (data?.datos ?? (data as unknown)) as T;
+  return data ?? ({ exito: true } as RespuestaBackend<T>);
+}
+
+// Comportamiento original: devuelve directamente "datos". No se modifica.
+export async function apiFetch<T>(
+  endpoint: string,
+  options: RequestInit = {}
+): Promise<T> {
+  const data = await ejecutarFetch<T>(endpoint, options);
+  return (data.datos ?? (data as unknown)) as T;
+}
+
+// Nuevo: para endpoints que devuelven campos extra junto a "datos"
+// (ej. GET /api/empleados devuelve { datos, paginacion }).
+export async function apiFetchFull<T>(
+  endpoint: string,
+  options: RequestInit = {}
+): Promise<RespuestaBackend<T>> {
+  return ejecutarFetch<T>(endpoint, options);
 }
