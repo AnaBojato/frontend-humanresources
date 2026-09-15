@@ -1,7 +1,6 @@
 import { useState, type FormEvent } from 'react';
 import { useNavigate } from 'react-router-dom';
 import {
-  Building2,
   User,
   Lock,
   Eye,
@@ -10,7 +9,6 @@ import {
   Loader2,
   AlertCircle,
   ShieldCheck,
-  Fingerprint,
 } from 'lucide-react';
 import BannerCarrusel from '../../components/BannerCarrusel/BannerCarrusel';
 import { iniciarSesion } from '../../services/authService';
