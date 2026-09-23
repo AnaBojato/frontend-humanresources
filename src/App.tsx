@@ -6,6 +6,7 @@ import Directory from "./pages/Directory/Directory";
 import Shifts from "./pages/Shifts/Shifts";
 
 import RutaProtegida from "./components/RutaProtegida/RutaProtegida";
+import Candidate from "./pages/Candidate/Candidate";
 
 function App() {
   return (
@@ -55,6 +56,16 @@ function App() {
             to="/login"
             replace
           />
+        }
+      />
+
+      {/* CANDIDATE */}
+      <Route
+        path="/candidatos"
+        element={
+          <RutaProtegida>
+            <Candidate />
+          </RutaProtegida>
         }
       />
 
