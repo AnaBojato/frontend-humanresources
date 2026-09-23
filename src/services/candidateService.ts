@@ -1,8 +1,6 @@
 import { apiFetch } from "./api";
 
-/* =========================================================
-   TIPOS
-   ========================================================= */
+/*TIPOS*/
 
 export interface CandidatoPipelineItem {
   idCandidato: number;
