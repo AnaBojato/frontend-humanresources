@@ -384,7 +384,7 @@ const Shifts: React.FC = () => {
               HUMAN RESOURCES
             </p>
 
-            <h1>Turnos</h1>
+            <h1>Shifts</h1>
 
             <p className="shifts-description">
               Administra los horarios de trabajo de AdventureWorks.
