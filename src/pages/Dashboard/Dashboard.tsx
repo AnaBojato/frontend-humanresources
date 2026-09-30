@@ -56,32 +56,6 @@ interface CandidatoReciente {
    ICONOS
    ========================================================= */
 
-const SearchIcon = () => (
-  <svg
-    viewBox="0 0 24 24"
-    className="svg-icon"
-    fill="none"
-    stroke="currentColor"
-    strokeWidth="2"
-  >
-    <circle cx="11" cy="11" r="7" />
-    <path d="m20 20-4-4" />
-  </svg>
-);
-
-const BellIcon = () => (
-  <svg
-    viewBox="0 0 24 24"
-    className="svg-icon"
-    fill="none"
-    stroke="currentColor"
-    strokeWidth="2"
-  >
-    <path d="M18 8a6 6 0 0 0-12 0c0 7-3 7-3 9h18c0-2-3-2-3-9" />
-    <path d="M13.7 21a2 2 0 0 1-3.4 0" />
-  </svg>
-);
-
 const UsersIcon = () => (
   <svg
     viewBox="0 0 24 24"
@@ -154,19 +128,6 @@ const ArrowUpIcon = () => (
   >
     <path d="M12 19V5" />
     <path d="m5 12 7-7 7 7" />
-  </svg>
-);
-
-const FileIcon = () => (
-  <svg
-    viewBox="0 0 24 24"
-    className="small-icon"
-    fill="none"
-    stroke="currentColor"
-    strokeWidth="2"
-  >
-    <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z" />
-    <path d="M14 2v6h6" />
   </svg>
 );
 
@@ -352,6 +313,7 @@ const Dashboard: React.FC = () => {
               <div className="error-icon">!</div>
               <h2>No se pudo cargar el Dashboard</h2>
               <p>{error || "No hay información disponible."}</p>
+
               <button
                 className="btn-primary"
                 onClick={() => window.location.reload()}
@@ -374,44 +336,8 @@ const Dashboard: React.FC = () => {
       <Sidebar activeItem="Dashboard" />
 
       <div className="content-margin">
-        {/* =====================================================
-            TOP NAV
-        ===================================================== */}
-
-        <header className="topnav">
-          <div className="search-bg">
-            <span className="search-icon-margin">
-              <SearchIcon />
-            </span>
-
-            <input
-              className="search-input"
-              type="text"
-              placeholder="Buscar empleados, departamentos o turnos..."
-            />
-          </div>
-
-          <div className="topnav-actions">
-            <button
-              className="icon-button notification-button"
-              aria-label="Notificaciones"
-            >
-              <BellIcon />
-              <span className="notification-dot" />
-            </button>
-
-            <div className="user-block">
-              <div className="user-info">
-                <span className="user-name">Alex Thompson</span>
-                <span className="user-role">Gerente de RRHH</span>
-              </div>
-
-              <div className="user-avatar">AT</div>
-            </div>
-          </div>
-        </header>
-
         <main className="main-canvas">
+
           {/* ===================================================
               HERO
           =================================================== */}
@@ -434,13 +360,6 @@ const Dashboard: React.FC = () => {
                 AdventureWorks sigue creciendo. Aquí tienes un resumen
                 del estado actual de los registros de la empresa.
               </p>
-
-              <div className="hero-actions">
-                <button className="btn-outline">
-                  <FileIcon />
-                  Ver todos los reportes
-                </button>
-              </div>
             </div>
           </section>
 
@@ -468,7 +387,10 @@ const Dashboard: React.FC = () => {
               </span>
 
               <span className="kpi-description">
-                {formatearNumero(estadisticas.totalEmpleados.activos)} empleados activos
+                {formatearNumero(
+                  estadisticas.totalEmpleados.activos
+                )}{" "}
+                empleados activos
               </span>
             </div>
 
@@ -482,7 +404,9 @@ const Dashboard: React.FC = () => {
               <span className="kpi-label">TOTAL DEPARTAMENTOS</span>
 
               <span className="kpi-value">
-                {formatearNumero(estadisticas.totalDepartamentos)}
+                {formatearNumero(
+                  estadisticas.totalDepartamentos
+                )}
               </span>
 
               <span className="kpi-description">
@@ -522,7 +446,9 @@ const Dashboard: React.FC = () => {
               <span className="kpi-label">TOTAL CANDIDATOS</span>
 
               <span className="kpi-value">
-                {formatearNumero(estadisticas.totalCandidatos)}
+                {formatearNumero(
+                  estadisticas.totalCandidatos
+                )}
               </span>
 
               <span className="kpi-description">
@@ -536,6 +462,7 @@ const Dashboard: React.FC = () => {
           =================================================== */}
 
           <section className="tables-row">
+
             {/* =================================================
                 EMPLEADOS
             ================================================= */}
@@ -543,7 +470,10 @@ const Dashboard: React.FC = () => {
             <div className="table-card">
               <div className="table-card-header">
                 <div>
-                  <span className="section-kicker">RECURSOS HUMANOS</span>
+                  <span className="section-kicker">
+                    RECURSOS HUMANOS
+                  </span>
+
                   <h3 className="table-title">
                     Últimos Empleados Registrados
                   </h3>
@@ -572,13 +502,16 @@ const Dashboard: React.FC = () => {
                           <td>
                             <div className="employee-cell">
                               <div className="employee-avatar">
-                                {obtenerIniciales(emp.nombreCompleto)}
+                                {obtenerIniciales(
+                                  emp.nombreCompleto
+                                )}
                               </div>
 
                               <div>
                                 <span className="cell-strong">
                                   {emp.nombreCompleto}
                                 </span>
+
                                 <span className="cell-id">
                                   ID #{emp.idEmpleado}
                                 </span>
@@ -590,18 +523,24 @@ const Dashboard: React.FC = () => {
 
                           <td>
                             <span className="department-badge">
-                              {emp.departamento || "Sin departamento"}
+                              {emp.departamento ||
+                                "Sin departamento"}
                             </span>
                           </td>
 
                           <td>
-                            {formatearFecha(emp.fechaContratacion)}
+                            {formatearFecha(
+                              emp.fechaContratacion
+                            )}
                           </td>
                         </tr>
                       ))
                     ) : (
                       <tr>
-                        <td colSpan={4} className="empty-state">
+                        <td
+                          colSpan={4}
+                          className="empty-state"
+                        >
                           No hay empleados registrados.
                         </td>
                       </tr>
@@ -618,7 +557,10 @@ const Dashboard: React.FC = () => {
             <div className="table-card">
               <div className="table-card-header">
                 <div>
-                  <span className="section-kicker">ORGANIZACIÓN</span>
+                  <span className="section-kicker">
+                    ORGANIZACIÓN
+                  </span>
+
                   <h3 className="table-title">
                     Empleados por Departamento
                   </h3>
@@ -634,7 +576,9 @@ const Dashboard: React.FC = () => {
                   <thead>
                     <tr>
                       <th>Departamento</th>
-                      <th className="align-right">Empleados</th>
+                      <th className="align-right">
+                        Empleados
+                      </th>
                     </tr>
                   </thead>
 
@@ -662,14 +606,19 @@ const Dashboard: React.FC = () => {
 
                           <td className="align-right">
                             <span className="department-total">
-                              {formatearNumero(dep.totalEmpleados)}
+                              {formatearNumero(
+                                dep.totalEmpleados
+                              )}
                             </span>
                           </td>
                         </tr>
                       ))
                     ) : (
                       <tr>
-                        <td colSpan={2} className="empty-state">
+                        <td
+                          colSpan={2}
+                          className="empty-state"
+                        >
                           No hay departamentos registrados.
                         </td>
                       </tr>
@@ -687,7 +636,10 @@ const Dashboard: React.FC = () => {
           <section className="table-card table-card--full">
             <div className="table-card-header">
               <div>
-                <span className="section-kicker">RECRUITMENT</span>
+                <span className="section-kicker">
+                  RECRUITMENT
+                </span>
+
                 <h3 className="table-title">
                   Últimos Candidatos Registrados
                 </h3>
@@ -733,11 +685,16 @@ const Dashboard: React.FC = () => {
                         </td>
 
                         <td>
-                          {cand.cargoAplicado || "No especificado"}
+                          {cand.cargoAplicado ||
+                            "No especificado"}
                         </td>
 
                         <td>
-                          <span className={obtenerClaseEtapa(cand.etapa)}>
+                          <span
+                            className={obtenerClaseEtapa(
+                              cand.etapa
+                            )}
+                          >
                             {traducirEtapa(cand.etapa)}
                           </span>
                         </td>
@@ -755,13 +712,18 @@ const Dashboard: React.FC = () => {
                         </td>
 
                         <td>
-                          {formatearFecha(cand.fechaRegistro)}
+                          {formatearFecha(
+                            cand.fechaRegistro
+                          )}
                         </td>
                       </tr>
                     ))
                   ) : (
                     <tr>
-                      <td colSpan={5} className="empty-state">
+                      <td
+                        colSpan={5}
+                        className="empty-state"
+                      >
                         No hay candidatos registrados.
                       </td>
                     </tr>
@@ -770,6 +732,7 @@ const Dashboard: React.FC = () => {
               </table>
             </div>
           </section>
+
         </main>
       </div>
     </div>
@@ -777,3 +740,4 @@ const Dashboard: React.FC = () => {
 };
 
 export default Dashboard;
+
